@@ -1,0 +1,14 @@
+---
+name: AWS S3 Terraform Outputs
+slug: s3-terraform-output
+project: infraprints
+namespace: [terraform, aws]
+description: Describes an S3 Object representing a terraform outputs file.
+license:
+  name: MIT
+tags:
+  - terraform
+  - terraform-module
+  - terraform-generation
+  - aws
+  - aws-s3
