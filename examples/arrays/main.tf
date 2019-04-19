@@ -2,7 +2,7 @@ module "example" {
   source = "../../"
 
   bucket = "infraprints-terraform-state-output-example"
-  key    = "ref/aws/infraprints/outputs.tf"
+  key    = "ref/aws/infraprints/primitive/outputs.tf"
 
   outputs = [
     {
