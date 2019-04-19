@@ -1,13 +1,3 @@
-variable "outputs" {
-  type = "map"
-
-  default = {
-    my_var_1 = "my_output"
-    my_var_2 = "my_output"
-    my_var_3 = "my_output"
-  }
-}
-
 data "template_file" "outputs" {
   count = "${length(var.outputs)}"
 
@@ -18,12 +8,25 @@ output "$${key}" {
 TEMPLATE
 
   vars {
-    key   = "${element(keys(var.outputs), count.index)}"
-    value = "${element(values(var.outputs), count.index)}"
+    key   = "${lookup(var.outputs[count.index], "key")}"
+    value = "${lookup(var.outputs[count.index], "value")}"
   }
 }
 
-output "rendered" {
-  description = "The final rendered template."
-  value       = "${join("\n", data.template_file.outputs.*.rendered)}"
+locals {
+  rendered = "${join("\n", data.template_file.outputs.*.rendered)}"
+}
+
+
+
+resource "aws_s3_bucket_object" "output" {
+  bucket           = "${var.bucket}"
+  key              = "${var.key}"
+  content          = "${local.rendered}"
+  content_language = "en-US"
+  etag             = "${md5(local.rendered)}"
+
+  tags = {
+    ManagedBy = "Terraform"
+  }
 }
