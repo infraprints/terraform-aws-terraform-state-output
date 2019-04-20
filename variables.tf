@@ -3,6 +3,15 @@ variable "outputs" {
   description = ""
 }
 
-variable "bucket" {}
-variable "key" {}
-variable "tags" {}
+variable "bucket" {
+  type = "string"
+}
+
+variable "key" {
+  type = "string"
+}
+
+variable "tags" {
+  type    = "map"
+  default = {}
+}
