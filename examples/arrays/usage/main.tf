@@ -1,5 +1,5 @@
 module "example" {
-  source = "s3::https://s3.amazonaws.com/infraprints-terraform-state-output-example/ref/aws/infraprints/"
+  source = "s3::https://s3.amazonaws.com/infraprints-terraform-state-output-example/ref/aws/infraprints/arrays/"
 }
 
 output "aws_account_id" {
@@ -12,4 +12,8 @@ output "route53_hosted_zone" {
 
 output "s3_bucket" {
   value = "${module.example.s3_bucket}"
+}
+
+output "nameservers" {
+  value = "${module.example.nameservers}"
 }

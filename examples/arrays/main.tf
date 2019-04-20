@@ -1,8 +1,12 @@
+locals {
+  nameservers = ["127.0.0.1", "127.0.0.2", "127.0.0.3"]
+}
+
 module "example" {
   source = "../../"
 
   bucket = "infraprints-terraform-state-output-example"
-  key    = "ref/aws/infraprints/primitive/outputs.tf"
+  key    = "ref/aws/infraprints/arrays/outputs.tf"
 
   outputs = [
     {
@@ -16,6 +20,10 @@ module "example" {
     {
       key   = "aws_account_id"
       value = "123412341234"
+    },
+    {
+      key   = "nameservers"
+      value = "${jsonencode(local.nameservers)}"
     },
   ]
 }
