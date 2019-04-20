@@ -1,6 +1,6 @@
-# Maps Usage
+# Advanced Syntax Usage
 
-Configuration in this directory creates a terraform output file (`outputs.tf`) in an S3 bucket. This example shows how to use maps with the module.
+Configuration in this directory creates a terraform output file (`outputs.tf`) in an S3 bucket. This example shows splitting the array into multiple single declarations.
 
 ## Not Yet Supported
 
