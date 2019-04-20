@@ -8,7 +8,7 @@ module "example" {
   bucket = "infraprints-terraform-state-output-example"
   key    = "arrays/outputs.tf"
 
-  outputs = [
+  terraform_output = [
     {
       key   = "s3_bucket"
       value = "infraprints-terraform-state-output-example"
