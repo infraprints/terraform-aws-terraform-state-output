@@ -3,17 +3,17 @@ locals {
 }
 
 data "null_data_source" "elements" {
-  count = "${length(var.outputs)}"
+  count = "${length(var.terraform_output)}"
 
   inputs = {
-    key      = "${lookup(var.outputs[count.index], "key")}"
-    value    = "${lookup(var.outputs[count.index], "value")}"
-    is_array = "${substr(("${lookup(var.outputs[count.index], "value")}"), 0, 1) == "["}"
+    key      = "${lookup(var.terraform_output[count.index], "key")}"
+    value    = "${lookup(var.terraform_output[count.index], "value")}"
+    is_array = "${substr(("${lookup(var.terraform_output[count.index], "value")}"), 0, 1) == "["}"
   }
 }
 
 data "template_file" "outputs" {
-  count = "${length(var.outputs)}"
+  count = "${length(var.terraform_output)}"
 
   template = <<TEMPLATE
 output "$${key}" {
