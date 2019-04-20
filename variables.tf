@@ -5,3 +5,4 @@ variable "outputs" {
 
 variable "bucket" {}
 variable "key" {}
+variable "tags" {}

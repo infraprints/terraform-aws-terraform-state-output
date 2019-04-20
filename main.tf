@@ -6,10 +6,9 @@ data "null_data_source" "elements" {
   count = "${length(var.outputs)}"
 
   inputs = {
-    key     = "${lookup(var.outputs[count.index], "key")}"
-    value   = "${lookup(var.outputs[count.index], "value")}"
-    isArray = "${substr(("${lookup(var.outputs[count.index], "value")}"), 0, 1) == "["}"
-    isMap   = "${substr(("${lookup(var.outputs[count.index], "value")}"), 0, 1) == "${local.lbrace}"}"
+    key      = "${lookup(var.outputs[count.index], "key")}"
+    value    = "${lookup(var.outputs[count.index], "value")}"
+    is_array = "${substr(("${lookup(var.outputs[count.index], "value")}"), 0, 1) == "["}"
   }
 }
 
@@ -25,12 +24,10 @@ TEMPLATE
   vars {
     key = "${lookup(data.null_data_source.elements.*.outputs[count.index], "key")}"
 
-    value = "${lookup(data.null_data_source.elements.*.outputs[count.index], "isArray")
+    value = "${lookup(data.null_data_source.elements.*.outputs[count.index], "is_array")
       ? lookup(data.null_data_source.elements.*.outputs[count.index], "value")
       : "\"${lookup(data.null_data_source.elements.*.outputs[count.index], "value")}\""
     }"
-
-    # value = "${substr((local.nameservers), 0, 1) == "[" ? lookup(var.outputs[count.index], "value") : lookup(var.outputs[count.index], "value")}"
   }
 }
 
@@ -45,7 +42,5 @@ resource "aws_s3_bucket_object" "output" {
   content_language = "en-US"
   etag             = "${md5(local.rendered)}"
 
-  tags = {
-    ManagedBy = "Terraform"
-  }
+  tags = "${var.tags}"
 }
