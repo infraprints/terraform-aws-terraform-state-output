@@ -1,5 +1,9 @@
 locals {
-  nameservers = ["127.0.0.1", "127.0.0.2", "127.0.0.3"]
+  nameservers = [
+    "127.0.0.1",
+    "127.0.0.2",
+    "127.0.0.3"
+  ]
 }
 
 module "example" {
@@ -28,7 +32,22 @@ module "example" {
   ]
 }
 
-resource "aws_s3_bucket" "outputs" {
-  bucket = "infraprints-terraform-state-output-example"
+##
+## State bucket
+##
+
+resource "random_id" "default" {
+  byte_length = 24
 }
 
+locals {
+  bucket = "infraprints-${random_id.default.hex}"
+}
+
+resource "aws_s3_bucket" "outputs" {
+  bucket = local.bucket
+}
+
+output "bucket_name" {
+  value = local.bucket
+}

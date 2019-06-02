@@ -6,22 +6,36 @@ module "example" {
 
   terraform_output = [
     {
-      key   = "s3_bucket"
-      value = "infraprints-terraform-state-output-example"
+      key   = "terraform_remote_output"
+      value = aws_s3_bucket.outputs.id
     },
     {
-      key   = "route53_hosted_zone"
-      value = "AFIA123412341234"
+      key   = "lambda_artifacts"
+      value = "my-lambda-artifacts"
     },
     {
-      key   = "aws_account_id"
-      value = "123412341234"
+      key   = "ci_cd_role_arn"
+      value = "arn:aws:iam::123412341234:role/CICDLambda"
     },
   ]
 }
 
+##
+## State bucket
+##
 
-resource "aws_s3_bucket" "outputs" {
-  bucket = "infraprints-terraform-state-output-example"
+resource "random_id" "default" {
+  byte_length = 24
 }
 
+locals {
+  bucket = "infraprints-${random_id.default.hex}"
+}
+
+resource "aws_s3_bucket" "outputs" {
+  bucket = local.bucket
+}
+
+output "bucket_name" {
+  value = local.bucket
+}
