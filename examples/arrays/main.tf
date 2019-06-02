@@ -23,7 +23,8 @@ module "example" {
     },
     {
       key   = "nameservers"
-      value = "${jsonencode(local.nameservers)}"
+      value = jsonencode(local.nameservers)
     },
   ]
 }
+

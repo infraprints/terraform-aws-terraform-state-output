@@ -19,3 +19,4 @@ module "output_resources" {
     },
   ]
 }
+
