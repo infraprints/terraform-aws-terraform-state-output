@@ -10,6 +10,14 @@ These types of resources are supported:
 ## Usage
 
 ```hcl
+locals {
+  topics = ["aws", "s3", "terraform"]
+  tags = {
+    name        = "infraprints",
+    description = "Infrastructure as Code."
+  }
+}
+
 module "output_resources" {
   source = "git::https://gitlab.com/infraprints/modules/aws/terraform-state-output"
 
@@ -18,16 +26,16 @@ module "output_resources" {
 
   terraform_output = [
     {
-      key   = "s3_bucket"
-      value = "infraprints-terraform-state-output"
-    },
-    {
-      key   = "route53_hosted_zone"
-      value = "AFIA123412341234"
-    },
-    {
       key   = "aws_account_id"
       value = "123412341234"
+    },
+    {
+      key   = "topics"
+      value = jsonencode(local.topics)
+    },
+    {
+      key   = "tags"
+      value = jsonencode(local.tags)
     },
   ]
 }
@@ -37,13 +45,11 @@ module "output_resources" {
 
 * [Basic Example](examples/basic)
 * [Arrays Example](examples/arrays)
-* [Maps Example (Not Yet Supported)](examples/maps)
-* [Syntax Example (Not Yet Supported)](examples/syntax)
+* [Maps Example](examples/maps)
 
 ## Notes
 
 * S3 Versioning should be enabled
-* Two of the examples are using unsupported approaches to using these modules
 
 ## Inputs
 
