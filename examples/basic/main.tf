@@ -1,7 +1,7 @@
 module "example" {
   source = "../../"
 
-  bucket = "infraprints-terraform-state-output-example"
+  bucket = aws_s3_bucket.outputs.id
   key    = "basic/outputs.tf"
 
   terraform_output = [
@@ -18,5 +18,10 @@ module "example" {
       value = "123412341234"
     },
   ]
+}
+
+
+resource "aws_s3_bucket" "outputs" {
+  bucket = "infraprints-terraform-state-output-example"
 }
 
