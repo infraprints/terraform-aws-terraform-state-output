@@ -1,12 +1,17 @@
 locals {
-  nameservers = ["127.0.0.1", "127.0.0.2", "127.0.0.3"]
+  tags = {
+    name        = "project"
+    description = "The description"
+  }
+
+  # ["127.0.0.1", "127.0.0.2", "127.0.0.3"]
 }
 
 module "example" {
   source = "../../"
 
   bucket = aws_s3_bucket.outputs.id
-  key    = "arrays/outputs.tf"
+  key    = "maps/outputs.tf"
 
   terraform_output = [
     {
@@ -22,11 +27,12 @@ module "example" {
       value = "123412341234"
     },
     {
-      key   = "nameservers"
-      value = jsonencode(local.nameservers)
+      key   = "tags"
+      value = jsonencode(local.tags)
     },
   ]
 }
+
 
 resource "aws_s3_bucket" "outputs" {
   bucket = "infraprints-terraform-state-output-example"

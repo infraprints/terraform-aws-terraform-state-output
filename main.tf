@@ -6,9 +6,14 @@ data "null_data_source" "elements" {
   count = length(var.terraform_output)
 
   inputs = {
-    key      = var.terraform_output[count.index]["key"]
-    value    = var.terraform_output[count.index]["value"]
-    is_array = substr(var.terraform_output[count.index]["value"], 0, 1) == "["
+    key    = var.terraform_output[count.index]["key"]
+    string = "\"${var.terraform_output[count.index]["value"]}\""
+    array  = var.terraform_output[count.index]["value"]
+    map    = replace(var.terraform_output[count.index]["value"], ":", "=")
+
+    is_array  = substr(var.terraform_output[count.index]["value"], 0, 1) == "["
+    is_map    = substr(var.terraform_output[count.index]["value"], 0, 1) == local.lbrace
+    is_string = substr(var.terraform_output[count.index]["value"], 0, 1) != "[" && substr(var.terraform_output[count.index]["value"], 0, 1) != local.lbrace
   }
 }
 
@@ -24,7 +29,7 @@ TEMPLATE
 
   vars = {
     key = data.null_data_source.elements[count.index].outputs["key"]
-    value = data.null_data_source.elements[count.index].outputs["is_array"] ? data.null_data_source.elements[count.index].outputs["value"] : "\"${data.null_data_source.elements[count.index].outputs["value"]}\""
+    value = data.null_data_source.elements[count.index].outputs["is_string"] ? data.null_data_source.elements[count.index].outputs["string"] : ( data.null_data_source.elements[count.index].outputs["is_array"] ? data.null_data_source.elements[count.index].outputs["array"] : data.null_data_source.elements[count.index].outputs["map"] )
   }
 }
 
