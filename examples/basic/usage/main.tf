@@ -1,5 +1,5 @@
 module "example" {
-  source = "s3::https://s3.amazonaws.com/infraprints-terraform-state-output-example/basic"
+  source = "s3::https://s3.amazonaws.com/TERRAFORM_BUCKET/basic"
 }
 
 output "aws_account_id" {
