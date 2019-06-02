@@ -1,7 +1,7 @@
 variable "terraform_output" {
   type = list(object({
     key   = string,
-    value = any
+    value = string
   }))
   description = "A set of terraform outputs to make available."
 }
