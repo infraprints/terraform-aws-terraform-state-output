@@ -3,13 +3,14 @@ module "example" {
 }
 
 output "terraform_remote_output" {
-  value = "${module.example.terraform_remote_output}"
+  value = module.example.terraform_remote_output
 }
 
 output "name" {
-  value = "${module.example.name}"
+  value = module.example.name
 }
 
 output "tags" {
-  value = "${module.example.tags}"
+  value = module.example.tags
 }
+
