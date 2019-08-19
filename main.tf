@@ -28,8 +28,8 @@ TEMPLATE
 
 
   vars = {
-    key = data.null_data_source.elements[count.index].outputs["key"]
-    value = data.null_data_source.elements[count.index].outputs["is_string"] ? data.null_data_source.elements[count.index].outputs["string"] : ( data.null_data_source.elements[count.index].outputs["is_array"] ? data.null_data_source.elements[count.index].outputs["array"] : data.null_data_source.elements[count.index].outputs["map"] )
+    key   = data.null_data_source.elements[count.index].outputs["key"]
+    value = data.null_data_source.elements[count.index].outputs["is_string"] ? data.null_data_source.elements[count.index].outputs["string"] : (data.null_data_source.elements[count.index].outputs["is_array"] ? data.null_data_source.elements[count.index].outputs["array"] : data.null_data_source.elements[count.index].outputs["map"])
   }
 }
 
@@ -38,11 +38,11 @@ locals {
 }
 
 resource "aws_s3_bucket_object" "output" {
-  bucket = var.bucket
-  key = var.key
-  content = local.rendered
+  bucket           = var.bucket
+  key              = var.key
+  content          = local.rendered
   content_language = "en-US"
-  etag = md5(local.rendered)
+  etag             = md5(local.rendered)
 
   tags = var.tags
 }
