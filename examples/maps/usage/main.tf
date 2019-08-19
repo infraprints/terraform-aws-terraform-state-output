@@ -14,3 +14,6 @@ output "tags" {
   value = module.example.tags
 }
 
+output "description" {
+  value = module.example.tags.description
+}
